@@ -27,6 +27,11 @@ class SudokuGrid
         ];
     }
 
+    /**
+     * Add a number to the grid
+     * Adding a number at invalid coordinates will throw an Exception
+     * Adding an invalid number will throw an Exception
+     */
     public function write(int $number, int $x, int $y): SudokuGrid
     {
         if ($number < 1 || $number > 9) {
@@ -39,21 +44,9 @@ class SudokuGrid
         return $this;
     }
 
-    private function numberAbsent() : array
-    {
-        return [
-            1 => false,
-            2 => false,
-            3 => false,
-            4 => false,
-            5 => false,
-            6 => false,
-            7 => false,
-            8 => false,
-            9 => false
-        ];
-    }
-
+    /**
+     * Returns a simple string representation of the sudoku grid
+     */
     public function __toString(): string
     {
         $result = "";
@@ -66,50 +59,11 @@ class SudokuGrid
         return $result;
     }
 
+    /**
+     * TODO : Complete the method
+     */
     public function isInvalid(): bool
     {
-        // Check lines
-        foreach ($this->grid as $line) {
-            $presentNumbers = $this->numberAbsent();
-            foreach ($line as $number) {
-                if ($number !== self::EMPTY) {
-                    if ($presentNumbers[$number]) {
-                        return true;
-                    }
-                    $presentNumbers[$number] = true;
-                }
-            }
-        }
-        // Check columns
-        for ($i = 0; $i < 9; $i++) {
-            $presentNumbers = $this->numberAbsent();
-            for ($j = 0; $j < 9; $j++) {
-                if ($this->grid[$j][$i] !== self::EMPTY) {
-                    if ($presentNumbers[$this->grid[$j][$i]]) {
-                        return true;
-                    }
-                    $presentNumbers[$this->grid[$j][$i]] = true;
-                }
-            }
-        }
-        // Check squares
-        for ($squareX = 0; $squareX < 3; $squareX++) {
-            for ($squareY = 0; $squareY < 3; $squareY++) {
-                $presentNumbers = $this->numberAbsent();
-                for ($x = $squareX*3; $x < $squareX*3 + 3; $x++) {
-                    for ($y = $squareY*3; $y < $squareY*3 + 3; $y++) {
-                        if ($this->grid[$x][$y] !== self::EMPTY) {
-                            if ($presentNumbers[$this->grid[$x][$y]]) {
-                                return true;
-                            }
-                            $presentNumbers[$this->grid[$x][$y]] = true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
+
     }
-
-
 }
